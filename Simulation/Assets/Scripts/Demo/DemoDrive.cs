@@ -96,7 +96,6 @@ public class DemoDrive : Agent
         sensor.AddObservation(_signedAngle); //1
         sensor.AddObservation(speed); //1
         sensor.AddObservation(dist); //1
-        print(_signedAngle + " " + speed + " " + dist);
         sensor.AddObservation(lidarSensorMeasurementsFront); //4 
         sensor.AddObservation(lidarSensorMeasurementsBack); //4 
     }
