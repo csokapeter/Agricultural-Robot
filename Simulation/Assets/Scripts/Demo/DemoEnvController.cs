@@ -17,22 +17,23 @@ public class DemoEnvController : MonoBehaviour
     private float _scoutStartRotZ;
 
     private float _radius = 2f;
-    private Vector2 _regionSize = new Vector2(20f, 20f);
+    private Vector2 _regionSize = new Vector2(15f, 15f);
     private int _rejectionSamples = 1;
     
     [SerializeField] private GameObject _flowerPrefab;
-    private int _numberOfFlowers = 10;
+    private int _numberOfFlowers = 5;
     private List<Vector2> _flowerPositions;
     [SerializeField] private GameObject _dogPrefab;
-    private int _numberOfDogs = 2;
+    private int _numberOfDogs = 1;
     private List<Vector2> _dogPositions;
     [SerializeField] private GameObject _rockPrefab;
-    private int _numberOfRocks = 2;
+    private int _numberOfRocks = 1;
     private List<Vector2> _rockPositions;
     private int _currentTargetIdx = -1;
 
     void Start()
     {
+        Time.timeScale = 3f;
         _agent = _scoutParentTransform.GetComponent<DemoDrive>();
         _agent.EnvRestart += ResetEnv;
         _agent.TargetPointReached += NextTarget;
@@ -75,7 +76,7 @@ public class DemoEnvController : MonoBehaviour
             _scoutStartPos = _scoutTransform.position;
             _scoutStartRotZ = _scoutTransform.rotation.eulerAngles.z;
             _currentTargetIdx++;
-            _targetTransform.localPosition = new Vector3(_flowerPositions[_currentTargetIdx].x + 0.7f, 0f, _flowerPositions[_currentTargetIdx].y);
+            _targetTransform.localPosition = new Vector3(_flowerPositions[_currentTargetIdx].x - 0.8f, 0f, _flowerPositions[_currentTargetIdx].y);
             _agent.SetTargetPosition(new Vector2(_targetTransform.position.x, _targetTransform.position.z));
         }
         else if (isBaseStation)

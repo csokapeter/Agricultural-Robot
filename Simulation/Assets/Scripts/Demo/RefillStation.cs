@@ -23,7 +23,7 @@ public class RefillStation : MonoBehaviour
         var robotToStationDist = Vector2.Distance(new Vector2(_scoutTransform.position.x, _scoutTransform.position.z), 
                                                 new Vector2(_baseStationPoint.transform.position.x, _baseStationPoint.transform.position.z));
 
-        if (robotToStationDist < _refillRadius && (_agent.currentWater < _agent.maxWater || _agent.currentEnergy < _agent.maxEnergy))
+        if (robotToStationDist < _refillRadius && (_agent.currentWater < _agent.maxWater || _agent.currentEnergy < _agent.maxEnergy * 0.99f))
         {
             _agent.inRefillZone = true;
             _agent.currentWater += _refillRate * Time.fixedDeltaTime;

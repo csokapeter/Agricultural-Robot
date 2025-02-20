@@ -75,12 +75,13 @@ public class EnvironmentController : MonoBehaviour
             Vector3 wallPos = new Vector3((_targetTransform.localPosition.x + startPosition.x) / 2f, 1f, (_targetTransform.localPosition.z + startPosition.z) / 2f);
             Vector3 perpVectorToTargetDir = Vector3.Cross(targetDir, Vector3.up);
 
+            var shiftWall = Random.Range(-1f, 1f);
             _wallLeft.transform.localScale = new Vector3(0.1f, _wallHeight, Random.Range(_minWallLength, _maxWallLength));
             _wallLeft.transform.rotation = Quaternion.LookRotation(targetDir);
-            _wallLeft.transform.localPosition = wallPos - perpVectorToTargetDir * _wallsDistance;
+            _wallLeft.transform.localPosition = wallPos - perpVectorToTargetDir * _wallsDistance + perpVectorToTargetDir * shiftWall;
             _wallRight.transform.localScale = new Vector3(0.1f, _wallHeight, Random.Range(_minWallLength, _maxWallLength));
             _wallRight.transform.rotation = Quaternion.LookRotation(targetDir);
-            _wallRight.transform.localPosition = wallPos + perpVectorToTargetDir * _wallsDistance;
+            _wallRight.transform.localPosition = wallPos + perpVectorToTargetDir * _wallsDistance + perpVectorToTargetDir * shiftWall;
         }
     }
 }

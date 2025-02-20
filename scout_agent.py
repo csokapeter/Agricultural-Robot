@@ -125,8 +125,10 @@ def main(args):
     decision_steps, _ = env.get_steps(behavior_name)
     agent_ids = list(decision_steps)
 
+    load_weights_folder, load_weights_file = os.path.split(args.weights)
+
     scout_model = PPO(state_dim, action_dim, lr, action_std, agent_ids, hidden_size=128, mini_batch_size=batch_size, inference=(args.mode == 'inference'))
-    scout_model.load('navigation.pth', 'weights')
+    scout_model.load(load_weights_file, load_weights_folder)
 
     if args.mode == 'train':
         writer = SummaryWriter(log_dir=os.path.join('train_logs', f'{today}_{level}'))

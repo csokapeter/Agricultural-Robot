@@ -30,11 +30,11 @@ public class DemoDrive : Agent
     private Vector2 _currentDirection;
     private Vector2 _targetDirection;
 
-    public float maxWater = 100f;
+    public float maxWater = 40f;
     public float maxEnergy = 100f;
     private float _waterUsagePerPlant = 10f;
     private float _energyUsagePerSecond = 0.005f;
-    private float _criticalEnergyLevel = 0.2f;
+    private float _criticalEnergyLevel = 0.3f;
 
     public float currentWater;
     public float currentEnergy;
@@ -96,9 +96,8 @@ public class DemoDrive : Agent
         sensor.AddObservation(_signedAngle); //1
         sensor.AddObservation(speed); //1
         sensor.AddObservation(dist); //1
-        print(_signedAngle + " " + speed + " " + dist);
         sensor.AddObservation(lidarSensorMeasurementsFront); //4 
-        sensor.AddObservation(lidarSensorMeasurementsBack); //4 
+        sensor.AddObservation(lidarSensorMeasurementsBack); //4
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -115,7 +114,7 @@ public class DemoDrive : Agent
                 joint.UpdateWheel();
             }
             CheckDone();
-            currentEnergy -= Time.deltaTime * 0.4f *(_energyUsagePerSecond + (Mathf.Abs(_forwardInput) + Mathf.Abs(_steerInput)));
+            currentEnergy -= Time.deltaTime * 0.3f *(_energyUsagePerSecond + (Mathf.Abs(_forwardInput) + Mathf.Abs(_steerInput)));
             currentEnergy = Mathf.Clamp(currentEnergy, 0, maxEnergy);
         }
         else
@@ -127,14 +126,6 @@ public class DemoDrive : Agent
 
     private void CheckDone()
     {
-        // If it takes longer than a minute
-        if (_steps > 3000)
-        {
-            print("MAX STEPS REACHED");
-            EndEpisode();
-            return;
-        }
-
         if (_currentDistance < _targetThreshold)
         {
             print("TARGET REACHED");

@@ -57,6 +57,7 @@ public class Drive : Agent
         _currentPosition = new Vector2(_scoutTransform.position.x, _scoutTransform.position.z);
         _currentDistance = _oldDistance = Vector2.Distance(_currentPosition, _targetPosition);
         _targetDirection = Vector3.Normalize(new Vector2(_targetPosition.x - _currentPosition.x, _targetPosition.y - _currentPosition.y));
+        _signedAngle = Vector2.SignedAngle(_currentDirection, _targetDirection) / 180f;
         _maxDistance = Vector2.Distance(_currentPosition, _targetPosition);
     }
 

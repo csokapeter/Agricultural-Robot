@@ -6,6 +6,11 @@ public static class PoissonDiscSampling
 {
     public static List<Vector2> GeneratePoints(float radius, Vector2 sampleRegionSize, int numSamplesBeforeRejection = 30)
     {
+        // Randomize
+        // int t = System.Environment.TickCount;
+        // Debug.Log(t);
+
+        Random.InitState(84622471);
         float cellSize = radius / Mathf.Sqrt(2);
 
         //index of the point list
