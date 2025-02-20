@@ -5,8 +5,10 @@ using Unity.MLAgents.Policies;
 using Unity.MLAgents.Sensors;
 using System;
 using System.IO;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 
 public class DemoDrive : Agent
 {
@@ -16,12 +18,10 @@ public class DemoDrive : Agent
     [SerializeField] private GameObject _lidarSensorFront;
     [SerializeField] private GameObject _lidarSensorBack;
     
-    private int _steps = 1;
     private const float _targetThreshold = 0.1f;
 
     private float _steerInput;
     private float _forwardInput;
-    private float _oldDistance;
     private float _currentDistance;
     private float _maxDistance;
     private float _signedAngle;
@@ -60,18 +60,15 @@ public class DemoDrive : Agent
         _scoutRb.velocity = Vector3.zero;
         _scoutRb.angularVelocity = Vector3.zero;
 
-        _steps = 0;
         _currentDirection = new Vector2(-_scoutTransform.up.x, -_scoutTransform.up.z);
         _currentPosition = new Vector2(_scoutTransform.position.x, _scoutTransform.position.z);
-        _currentDistance = _oldDistance = Vector2.Distance(_currentPosition, _targetPosition);
+        _currentDistance = Vector2.Distance(_currentPosition, _targetPosition);
         _targetDirection = Vector3.Normalize(new Vector2(_targetPosition.x - _currentPosition.x, _targetPosition.y - _currentPosition.y));
         _maxDistance = Vector2.Distance(_currentPosition, _targetPosition);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        _steps++;
-
         if ((currentEnergy < (maxEnergy * _criticalEnergyLevel) || currentWater < _waterUsagePerPlant) && !_hasCalledTargetPoint)
         {
             CallTargetPointReached(true);
@@ -81,8 +78,16 @@ public class DemoDrive : Agent
         float[] lidarSensorMeasurementsFront = _lidarSensorFront.GetComponent<LidarSensor>().GetLidarSensorMeasurements();
         float[] lidarSensorMeasurementsBack = _lidarSensorBack.GetComponent<LidarSensor>().GetLidarSensorMeasurements();
 
-        var velocity = new Vector2(_scoutRb.velocity.x, _scoutRb.velocity.z);
-        var speed = velocity.magnitude;
+        if (lidarSensorMeasurementsFront.Any(value => value < 0.04) || 
+            lidarSensorMeasurementsBack.Any(value => value < 0.04))
+        {
+            Debug.Log("About to hit something! HELP! Exiting.");
+            EditorApplication.ExitPlaymode();
+        }
+
+
+        Vector2 velocity = new Vector2(_scoutRb.velocity.x, _scoutRb.velocity.z);
+        float speed = velocity.magnitude;
         speed *= Mathf.Sign(Vector2.Dot(velocity.normalized, new Vector2(-_scoutTransform.up.x, -_scoutTransform.up.z)));
 
         _currentPosition = new Vector2(_scoutTransform.position.x, _scoutTransform.position.z);
@@ -91,13 +96,13 @@ public class DemoDrive : Agent
         _currentDirection.y = _scoutTransform.up.z * -1f;
         _targetDirection = Vector3.Normalize(new Vector2(_targetPosition.x - _currentPosition.x, _targetPosition.y - _currentPosition.y));
         _signedAngle = Vector2.SignedAngle(_currentDirection, _targetDirection) / 180f;
-        var dist = _maxDistance == 0 ? 0 : _currentDistance / _maxDistance;
+        float dist = _maxDistance == 0 ? 0 : _currentDistance / _maxDistance;
 
-        sensor.AddObservation(_signedAngle); //1
-        sensor.AddObservation(speed); //1
-        sensor.AddObservation(dist); //1
-        sensor.AddObservation(lidarSensorMeasurementsFront); //4 
-        sensor.AddObservation(lidarSensorMeasurementsBack); //4
+        sensor.AddObservation(_signedAngle); // dim: 1
+        sensor.AddObservation(speed); //dim: 1
+        sensor.AddObservation(dist); //dim: 1
+        sensor.AddObservation(lidarSensorMeasurementsFront); //dim: 4
+        sensor.AddObservation(lidarSensorMeasurementsBack); //dim: 4
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -128,17 +133,16 @@ public class DemoDrive : Agent
     {
         if (_currentDistance < _targetThreshold)
         {
-            print("TARGET REACHED");
+            Debug.Log("TARGET REACHED");
             WaterPlant();
             CallTargetPointReached(false);
-            _steps = 0;
             return;
         }
     }
 
     public void CollisionDetected()
     {
-        print("COLLISION");
+        Debug.Log("COLLISION");
         AddReward(-200f);
         EndEpisode();
     }

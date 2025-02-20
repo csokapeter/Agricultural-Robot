@@ -49,7 +49,7 @@ public class DemoEnvController : MonoBehaviour
 
         _scoutStartPos = _scoutTransform.position;
         _scoutStartRotZ = _scoutTransform.rotation.eulerAngles.z;
-        print(_scoutTransform.eulerAngles);
+        Debug.Log(_scoutTransform.eulerAngles);
 
         List<Vector2> points = PoissonDiscSampling.GeneratePoints(_radius, _regionSize, _rejectionSamples);
         _flowerPositions = points.Take(_numberOfFlowers).ToList();
@@ -87,7 +87,7 @@ public class DemoEnvController : MonoBehaviour
         }
         else
         {
-            print("All plants watered! Exiting.");
+            Debug.Log("All plants watered! Exiting.");
             EditorApplication.ExitPlaymode();
         }
     }

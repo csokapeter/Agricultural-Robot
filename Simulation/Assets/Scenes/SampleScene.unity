@@ -963,6 +963,7 @@ MonoBehaviour:
   _mapWidth: 10
   _walls: 1
   _alternate: 1
+  _shiftWalls: 1
   _wallsDistance: 1.5
   _maxStartRotationAngle: 360
   _minWallLength: 0.1
@@ -978,7 +979,7 @@ Transform:
   m_GameObject: {fileID: 226609263}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.02, y: 0, z: 0}
+  m_LocalPosition: {x: 35, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2014,7 +2015,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2119,7 +2120,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -2250,7 +2251,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c6f92a87417578746bf82f032a070f3a, type: 2}
+  - {fileID: 2100000, guid: 8b96aa2d2b76a5c00a36b0886dad0e50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4272,6 +4273,7 @@ MonoBehaviour:
   _mapWidth: 10
   _walls: 1
   _alternate: 1
+  _shiftWalls: 1
   _wallsDistance: 1.5
   _maxStartRotationAngle: 360
   _minWallLength: 0.1
@@ -4287,7 +4289,7 @@ Transform:
   m_GameObject: {fileID: 667118836}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 34.4}
+  m_LocalPosition: {x: 0, y: 0, z: 35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5128,8 +5130,6 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  _renderTexture: {fileID: 8400000, guid: 548283735d8815946aea348baa9e1175, type: 2}
-  _frontWheels: []
   _wheels:
   - {fileID: 761885581}
   - {fileID: 761885580}
@@ -5139,8 +5139,6 @@ MonoBehaviour:
   _scoutTransform: {fileID: 761885582}
   _lidarSensorFront: {fileID: 298778274}
   _lidarSensorBack: {fileID: 1709943666}
-  _maxSteeringAngle: 30
-  _maxMotorTorque: 700
 --- !u!1 &779779921
 GameObject:
   m_ObjectHideFlags: 0
@@ -6778,8 +6776,6 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  _renderTexture: {fileID: 8400000, guid: 548283735d8815946aea348baa9e1175, type: 2}
-  _frontWheels: []
   _wheels:
   - {fileID: 900208004}
   - {fileID: 900208003}
@@ -6789,8 +6785,6 @@ MonoBehaviour:
   _scoutTransform: {fileID: 900208005}
   _lidarSensorFront: {fileID: 1041084437}
   _lidarSensorBack: {fileID: 436065893}
-  _maxSteeringAngle: 30
-  _maxMotorTorque: 700
 --- !u!114 &919588616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8582,8 +8576,6 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  _renderTexture: {fileID: 8400000, guid: 548283735d8815946aea348baa9e1175, type: 2}
-  _frontWheels: []
   _wheels:
   - {fileID: 835955576}
   - {fileID: 1825036713}
@@ -8593,8 +8585,6 @@ MonoBehaviour:
   _scoutTransform: {fileID: 188403328}
   _lidarSensorFront: {fileID: 599174663}
   _lidarSensorBack: {fileID: 1016475000}
-  _maxSteeringAngle: 30
-  _maxMotorTorque: 700
 --- !u!1 &1331093058
 GameObject:
   m_ObjectHideFlags: 0
@@ -10230,8 +10220,6 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  _renderTexture: {fileID: 8400000, guid: 548283735d8815946aea348baa9e1175, type: 2}
-  _frontWheels: []
   _wheels:
   - {fileID: 1699881067}
   - {fileID: 1699881066}
@@ -10241,8 +10229,6 @@ MonoBehaviour:
   _scoutTransform: {fileID: 1699881068}
   _lidarSensorFront: {fileID: 315994528}
   _lidarSensorBack: {fileID: 982708241}
-  _maxSteeringAngle: 30
-  _maxMotorTorque: 700
 --- !u!1 &1709943666
 GameObject:
   m_ObjectHideFlags: 0
@@ -10692,6 +10678,7 @@ MonoBehaviour:
   _mapWidth: 10
   _walls: 1
   _alternate: 1
+  _shiftWalls: 1
   _wallsDistance: 1.5
   _maxStartRotationAngle: 360
   _minWallLength: 0.1
@@ -11229,6 +11216,7 @@ MonoBehaviour:
   _mapWidth: 10
   _walls: 1
   _alternate: 1
+  _shiftWalls: 1
   _wallsDistance: 1.5
   _maxStartRotationAngle: 360
   _minWallLength: 0.1
@@ -11244,7 +11232,7 @@ Transform:
   m_GameObject: {fileID: 1989079015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.02, y: 0, z: 34.4}
+  m_LocalPosition: {x: 35, y: 0, z: 35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11264,15 +11252,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1498112617092028282, guid: a2a228e2bdd41bc40b78a088756800ea, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 1498112617092028282, guid: a2a228e2bdd41bc40b78a088756800ea, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 1498112617092028282, guid: a2a228e2bdd41bc40b78a088756800ea, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 1498112617092028282, guid: a2a228e2bdd41bc40b78a088756800ea, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11280,7 +11268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1498112617092028282, guid: a2a228e2bdd41bc40b78a088756800ea, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.216
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 1498112617092028282, guid: a2a228e2bdd41bc40b78a088756800ea, type: 3}
       propertyPath: m_LocalPosition.z

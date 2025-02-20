@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: miniblack
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: -4167465530404022, guid: 6e943b50394524d47951af8fea8cbfe7, type: 3}
+  m_Parent: {fileID: -4167465530404022, guid: d57f123e7c45e0249b172e6be5cf33bb, type: 3}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
