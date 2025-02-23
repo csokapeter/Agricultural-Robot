@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This module is responsible for generating random targets and obstacles in the scene.
+/// It can be used to create dynamic environments by spawning objects at random positions.
+/// </summary>
 public static class PoissonDiscSampling
 {
     public static List<Vector2> GeneratePoints(float radius, Vector2 sampleRegionSize, int numSamplesBeforeRejection = 30)
     {
         // Randomize
-        // int t = System.Environment.TickCount;
-        // Debug.Log(t);
+        int t = System.Environment.TickCount;
+        Debug.Log(t);
 
-        Random.InitState(84622471);
+        Random.InitState(t);
         float cellSize = radius / Mathf.Sqrt(2);
 
         //index of the point list

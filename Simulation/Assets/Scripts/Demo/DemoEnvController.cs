@@ -10,25 +10,15 @@ public class DemoEnvController : MonoBehaviour
     [SerializeField] private Transform _scoutTransform;
     [SerializeField] private Transform _targetTransform;
     [SerializeField] private GameObject _baseStationPoint;
+    [SerializeField] private List<Transform> _flowers;
+    [SerializeField] private List<Transform> _dogs;
+    [SerializeField] private List<Transform> _rocks;
 
     private DemoDrive _agent;
 
     private Vector3 _scoutStartPos;
     private float _scoutStartRotZ;
 
-    private float _radius = 2f;
-    private Vector2 _regionSize = new Vector2(15f, 15f);
-    private int _rejectionSamples = 1;
-    
-    [SerializeField] private GameObject _flowerPrefab;
-    private int _numberOfFlowers = 5;
-    private List<Vector2> _flowerPositions;
-    [SerializeField] private GameObject _dogPrefab;
-    private int _numberOfDogs = 1;
-    private List<Vector2> _dogPositions;
-    [SerializeField] private GameObject _rockPrefab;
-    private int _numberOfRocks = 1;
-    private List<Vector2> _rockPositions;
     private int _currentTargetIdx = -1;
 
     void Start()
@@ -49,18 +39,17 @@ public class DemoEnvController : MonoBehaviour
 
         _scoutStartPos = _scoutTransform.position;
         _scoutStartRotZ = _scoutTransform.rotation.eulerAngles.z;
-        Debug.Log(_scoutTransform.eulerAngles);
-
-        List<Vector2> points = PoissonDiscSampling.GeneratePoints(_radius, _regionSize, _rejectionSamples);
-        _flowerPositions = points.Take(_numberOfFlowers).ToList();
-        GenerateObject(_flowerPrefab, _flowerPositions);
-        _dogPositions = points.Skip(_numberOfFlowers).Take(_numberOfDogs).ToList();
-        GenerateObject(_dogPrefab, _dogPositions);
-        _rockPositions = points.Skip(_numberOfFlowers + _numberOfDogs).Take(_numberOfRocks).ToList();
-        GenerateObject(_rockPrefab, _rockPositions);
 
         ResetEnv();
         NextTarget(false);
+    }
+
+    void FixedUpdate()
+    {
+        if (_currentTargetIdx > 3)
+        {
+            _dogs[0].transform.position = Vector3.MoveTowards(_dogs[0].transform.position, _baseStationPoint.transform.position + new Vector3(2f, 0f, 0f), 0.2f * Time.fixedDeltaTime);
+        }
     }
 
     private void ResetEnv()
@@ -71,12 +60,12 @@ public class DemoEnvController : MonoBehaviour
 
     private void NextTarget(bool isBaseStation)
     {
-        if (!isBaseStation && _currentTargetIdx < _flowerPositions.Count)
+        if (!isBaseStation && _currentTargetIdx < _flowers.Count)
         {
             _scoutStartPos = _scoutTransform.position;
             _scoutStartRotZ = _scoutTransform.rotation.eulerAngles.z;
             _currentTargetIdx++;
-            _targetTransform.localPosition = new Vector3(_flowerPositions[_currentTargetIdx].x - 0.8f, 0f, _flowerPositions[_currentTargetIdx].y);
+            _targetTransform.position = new Vector3(_flowers[_currentTargetIdx].position.x - 0.8f, 0f, _flowers[_currentTargetIdx].position.z);
             _agent.SetTargetPosition(new Vector2(_targetTransform.position.x, _targetTransform.position.z));
         }
         else if (isBaseStation)
@@ -89,21 +78,6 @@ public class DemoEnvController : MonoBehaviour
         {
             Debug.Log("All plants watered! Exiting.");
             EditorApplication.ExitPlaymode();
-        }
-    }
-
-    private void GenerateObject(GameObject prefab, List<Vector2> points)
-    {
-        if (prefab != null)
-        {
-            foreach (Vector2 point in points)
-            {
-                Instantiate(prefab, new Vector3(point.x, 0, point.y), Quaternion.identity);
-            }
-        }
-        else
-        {
-            Debug.LogError("FBX Prefab not assigned!");
         }
     }
 }
