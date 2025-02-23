@@ -59,7 +59,7 @@ public class DemoEnvController : MonoBehaviour
 
     private void NextTarget(bool isBaseStation)
     {
-        if (!isBaseStation && _currentTargetIdx < _flowers.Count)
+        if (!isBaseStation && _currentTargetIdx < _flowers.Count - 1)
         {
             _scoutStartPos = _scoutTransform.position;
             _scoutStartRotZ = _scoutTransform.rotation.eulerAngles.z;
