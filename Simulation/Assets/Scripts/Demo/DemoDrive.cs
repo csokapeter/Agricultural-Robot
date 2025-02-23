@@ -71,6 +71,7 @@ public class DemoDrive : Agent
     {
         if ((currentEnergy < (maxEnergy * _criticalEnergyLevel) || currentWater < _waterUsagePerPlant) && !_hasCalledTargetPoint)
         {
+            Debug.Log("Low on resources! Returning to refill station.");
             CallTargetPointReached(true);
             _hasCalledTargetPoint = true;
         }
@@ -124,7 +125,7 @@ public class DemoDrive : Agent
         }
         else
         {
-            Debug.Log("Charging energy: " + currentEnergy + ", water: " + currentWater);
+            Debug.Log($"Charging water: {currentWater}, energy: {currentEnergy}");
         }
         
     }
@@ -167,7 +168,7 @@ public class DemoDrive : Agent
         if (currentWater >= _waterUsagePerPlant)
         {
             currentWater -= _waterUsagePerPlant;
-            Debug.Log("Plant watered! Remaining water: " + currentWater);
+            Debug.Log($"Plant watered! Remaining water: {currentWater} Remaining energy: {currentEnergy}");
         }
     }
 

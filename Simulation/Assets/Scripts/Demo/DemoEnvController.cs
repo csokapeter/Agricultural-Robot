@@ -23,7 +23,6 @@ public class DemoEnvController : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 3f;
         _agent = _scoutParentTransform.GetComponent<DemoDrive>();
         _agent.EnvRestart += ResetEnv;
         _agent.TargetPointReached += NextTarget;
@@ -48,7 +47,7 @@ public class DemoEnvController : MonoBehaviour
     {
         if (_currentTargetIdx > 3)
         {
-            _dogs[0].transform.position = Vector3.MoveTowards(_dogs[0].transform.position, _baseStationPoint.transform.position + new Vector3(2f, 0f, 0f), 0.2f * Time.fixedDeltaTime);
+            _dogs[0].transform.position = Vector3.MoveTowards(_dogs[0].transform.position, _baseStationPoint.transform.position + new Vector3(1.5f, 0f, 1f), 0.2f * Time.fixedDeltaTime);
         }
     }
 
